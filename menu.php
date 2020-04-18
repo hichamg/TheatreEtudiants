@@ -62,7 +62,8 @@ $motdepasse = $_SESSION['motdepasse'];
 
       <h2> Requêtes à réaliser sur la BD fournie</h2>
       <ul class="menu">
-         <li><a href="DetailsRepresentations.php">Afficher les détails des représentations </a></li>
+         <li><a href="DetailsRepresentation.php">Afficher les détails des représentations </a></li>
+         <li><a href="CategorieTicket.php">Détails des tickets par catégorie </a></li>
          <li><a href="RepresentationsVides.php">Afficher les représentations sans place réservée</a></li>
          <li><a href="ResaSpectacles1.php">
                Pour chaque spectacle, donner son numéro, son nom, les dates de ses<br />répresentations et pour chacune le nombre de places réservées (version avec deux curseurs)</a></li>
