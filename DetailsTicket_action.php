@@ -7,8 +7,8 @@
 	include('entete.php');
 
 	// construction de la requete
-	$requete = ("
-		SELECT noSpec, dateRep, noPlace, noRang
+	$requete = ( "
+		SELECT noSpec, to_char(daterep,'DD/MM/YYYY HH:MI') as dateRep, noPlace, noRang, to_char(dateEmission,'DD/MM/YYYY HH:MI') as dateEmission, noDossier
 		FROM theatre.LesTickets
 		WHERE noSerie = :n
 	");
@@ -44,7 +44,13 @@
 		else {
 
 			// on affiche la table qui va servir a la mise en page du resultat
-			echo "<table><tr><th>noSpec</th><th>dateRep</th><th>noPlace</th><th>noRang</th></tr>" ;
+			echo "<table><tr>	<th>noSpec</th>
+								<th>dateRep</th>
+								<th>noPlace</th>
+								<th>noRang</th>
+								<th>dateEmission</th>
+								<th>noDossier</th>
+						</tr>" ;
 
 			// on affiche un résultat et on passe au suivant s'il existe
 			do {
@@ -53,7 +59,14 @@
 				$dateRep = oci_result($curseur, 2) ;
 				$noPlace = oci_result($curseur, 3) ;
 				$noRang = oci_result($curseur, 4) ;
-				echo "<tr><td>$noSpec</td><td>$dateRep</td><td>$noPlace</td><td>$noRang</td></tr>";
+				$dateEmission = oci_result($curseur, 5);
+				$noDossier = oci_result($curseur, 6);
+				echo "<tr>	<td>$noSpec</td>
+							<td>$dateRep</td>
+							<td>$noPlace</td>
+							<td>$noRang</td>
+							<td>$dateEmission</td>
+							<td>$noDossier</td></tr>";
 
 			} while (oci_fetch ($curseur));
 

@@ -8,11 +8,12 @@ include('entete.php');
 
 // construction de la requete
 $requete = ( "
-        SELECT NOPLACE, NORANG, NOSERIE, NOSPEC, DATEREP, NODOSSIER, DATEEMISSION 
+        SELECT DISTINCT NOPLACE, NORANG, NOSERIE, NOSPEC, DATEREP, NODOSSIER, DATEEMISSION 
         FROM THEATRE.LESTICKETS
         NATURAL JOIN THEATRE.LESPLACES
         NATURAL JOIN THEATRE.LESZONES
         WHERE NOMC= :n
+        ORDER BY NOSERIE
 	");
 
 // analyse de la requete et association au curseur
@@ -45,7 +46,7 @@ if (!$ok) {
         echo "<table><tr>   <th>No° du Siège</th>
                             <th>No° du Rang</th>
                             <th>No° de Série</th>
-                            <th>No) du Spectacle</th>
+                            <th>No° du Spectacle</th>
                             <th>Date de la représentation</th>
                             <th>No° du dossier</th>
                             <th>Date d'émission</th>
