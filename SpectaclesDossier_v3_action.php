@@ -2,26 +2,30 @@
 
 	// récupération de la catégorie
 	$categorie = $_POST['categorie'];
-	$noDossier = $_POST['noDossier'];
-
+	$noDossier = $_GET['noDossier'];
 	
+	//
 	$titre = "Liste des places associées au dossier $noDossier pour la catégorie $categorie";
 	include('entete.php');
-
+	
 	// construction de la requete
 	$requete = ("
 		SELECT noPlace, noRang, noZone, nomS
-		FROM theatre.LesSieges natural join theatre.LesZones natural join theatre.LesCategories natural join theatre.LesTickets natural join theatre.LesSpectacles
-		WHERE lower(nomC) = lower(:n1)
-		AND noDossier = :n2
+		FROM theatre.LesSieges 
+		natural join theatre.LesZones 
+		natural join theatre.LesCategories 
+		natural join theatre.LesTickets 
+		natural join theatre.LesSpectacles
+		WHERE lower(nomC) = lower(:n)
+		AND noDossier =:p
 	");
 
 	// analyse de la requete et association au curseur
 	$curseur = oci_parse ($lien, $requete) ;
 
 	// affectation de la variable
-	oci_bind_by_name ($curseur, ':n1', $categorie);
-	oci_bind_by_name($curseur, ':n2', $noDossier);
+	oci_bind_by_name ($curseur, ':n', $categorie);
+	oci_bind_by_name($curseur, ':p', $noDossier);
 
 	// execution de la requete
 	$ok = @oci_execute ($curseur) ;
@@ -70,5 +74,3 @@
 	oci_free_statement($curseur);
 
 	include('pied.php');
-
-?>

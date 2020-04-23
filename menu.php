@@ -57,7 +57,7 @@ $motdepasse = $_SESSION['motdepasse'];
          <li><a href="SpectaclesDossier_v2.php">
                Pour les spectacles réservés par le dossier No 11, donner les places d'une catégorie donnée<br />(version améliorée 2)</a></li>
          <li><a href="SpectaclesDossier_v3.php">
-               Pour les spectacles réservés par le dossier No 11, donner les places d'une catégorie donnée<br />(version améliorée 3)</a></li>
+               Pour les spectacles réservés par le dossier donnée, donner les places d'une catégorie donnée<br />(version améliorée 3)</a></li>
       </ul>
 
       <h2> Requêtes à réaliser sur la BD fournie</h2>
