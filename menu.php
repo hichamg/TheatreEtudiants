@@ -43,6 +43,13 @@ $motdepasse = $_SESSION['motdepasse'];
          <li><a href="tables.php"> Relations appartenant au compte connecté </a></li>
       </ul>
 
+      <h2> Gestion de la base de données a créer </h2>
+      <ul class="menu">
+         <li><a href="create_my_tables.php">Création des relations</a> </li>
+         <li><a href="filling_my_tables.php">Remplissage de la bdd</a></li>
+         <li><a href="delete_my_tables.php"> Suppression de la bdd</a></li>
+      </ul>
+
       <h2> Requêtes fournies (observer le comportement et le code) sur la BD fournie </h2>
       <ul class="menu">
          <li><a href="Coldplay.php"> Représention(s) Coldplay </a></li>
