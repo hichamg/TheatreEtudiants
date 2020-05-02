@@ -35,7 +35,7 @@ create table LesRepresentations (
     constraint LesRepresentations_pk primary key (dateRep),
     -- on rajoute contrainte unique pour resoudre errer ORA-02270
     -- lors de la creation de la table LesTickets
-    constraint LesRepresentations_unique unique (dateRep,numS),
+    --constraint LesRepresentations_unique unique (dateRep,numS),
     constraint LesRepresentations_check check ( numS > 0 )
 );
 
@@ -54,11 +54,10 @@ create table LesTickets (
     noRang number(4) not null,
     dateEmission date,
     noDossier number(4) not null,
-    constraint LesTickets_pk primary key (noSerie, numS, dateRep, noPlace, noRang),
-    constraint LesTickets_fk1 foreign key (numS, dateRep) references LesRepresentations(numS, dateRep),
+    constraint LesTickets_pk primary key (noSerie),
+    constraint LesTickets_fk1 foreign key (dateRep) references LesRepresentations(dateRep),
     constraint LesTickets_fk2 foreign key (noPlace, noRang) references LesPlaces(noPlace, noRang),
     constraint LesTickets_fk3 foreign key (noDossier) references LesDossiers(noDossier),
     constraint LesTickets_check1 check (numS>0 and noSerie>0 and noPlace>0 and noRang>0 and noDossier>0),
     constraint LesTickets_check2 check ( dateEmission < dateRep )
 );
-

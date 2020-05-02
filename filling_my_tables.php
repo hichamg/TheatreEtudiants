@@ -1,65 +1,57 @@
 <?php
 
-	$titre = 'Remplissage de la base de données';
+	$titre = 'Contenu des relations fournies';
 	include('entete.php');
 
 	// définition des relations
-	$lesRelations = array ("LesCategories","LesZones", "LesPlaces","LesSpectacles","LesRepresentations","LesDossiers","LesTickets");
+	$lesRelations = array ( "LesCategories", "LesZones", "LesPlaces", "LesSpectacles", "LesRepresentations", "LesDossiers","LesTickets");
+ 	$requete[1]= "	insert into LesCategories
+					select * from theatre.LESCATEGORIES
+				";
 
-	// définition des attributs
-	$lesSchemas = array (
-        "LesCategories" => array("NOMC","PRIX"),
-        "LesZones" => array("NUMZ","NOMC"),
-        "LesPlaces" => array("NOPLACE","NORANG","NUMZ"),
-        "LesSpectacles" => array("NUMS","NOMS"),
-        "LesRepresentations" => array("DATEREP","NUMS"),
-        "LesDossiers" => array("NODOSSIER","MONTANT"),
-        "LesTickets" => array("NOSERIE","NUMS","DATEREP","NOPLACE","NORANG","DATEEMISSION","NODOSSIER")
-    );
+    $requete[2]= "	insert into LesZones
+					select * from theatre.LesZones
+				";
+    
+    $requete[3]= "	insert into LesPlaces
+					select * from theatre.LESSIEGES
+				";
 
+    $requete[4]= "	insert into LesSpectacles
+					select NOSPEC, NOMS from THEATRE.LESSPECTACLES
+				";
 
-	// pour chaque relation
-	foreach ($lesRelations as $uneRelation) {
+    $requete[5]= "	insert into LesRepresentations
+					select dateRep,nospec from THEATRE.LESREPRESENTATIONS
+				";
 
-		// construction de la requête
-		$requete = "select * from theatre.$uneRelation ORDER BY {$lesSchemas[$uneRelation][0]}";
+    $requete[6]= "	insert into LESDOSSIERS
+					select noDossier, sum(prix) as montant
+					from theatre.LesTickets
+					natural join theatre.LESSIEGES
+					natural join theatre.LesZones
+					natural join theatre.LesCategories
+					group by noDossier
+					order by noDossier
+				";
 
-		// analyse de la requete et association au curseur
-		$curseur = oci_parse ($lien, $requete) ;
+    $requete[7]= "	insert into LesTickets
+					select * from THEATRE.LESTICKETS
+				";
+				
+    for ($i=1; $i<=7 ; $i++){
+        $curseur = oci_parse ($lien, $requete[$i]) ;
+        $ok=@oci_execute ($curseur);
+        if (!$ok) {
+					 // oci_execute a échoué, on affiche l'erreur
+					$error_message = oci_error($curseur1);
+                    echo "<p class=\"erreur\">{$error_message['message']}<b>Insertion impossible</b></p>";
 
-		// execution de la requete
-		oci_execute ($curseur);
-
-		if (!($row = oci_fetch_array ($curseur, OCI_ASSOC))) {
-
-			// le resultat est vide
-			echo "<p><b>La relation ".$uneRelation." est vide </b></p>" ;
-
-		}
-		else {
-
-			// création de la table qui va servir a la mise en page du resultat
-			echo "<p><table> <tr><th> ".$uneRelation." </th></tr><tr>" ;
-
-			foreach ($lesSchemas[$uneRelation] as $unAttr)
-				echo "<td> ".$unAttr." </td>";
-
-			echo "</tr>";
-
-			// Affichage du resultat (non vide)
-			do {
-				echo "<tr>";
-				foreach ($lesSchemas[$uneRelation] as $unAttr)
-					echo "<td> ".$row[$unAttr]." </td>";
-				echo "</tr>";
-			} while ($row = oci_fetch_array ($curseur, OCI_ASSOC));
-
-			echo "</table></p>";
-
-		}
-
-		oci_free_statement($curseur);
-
-	}
+				} 
+				else {	
+                    echo "Remplissage de la table ".$lesRelations[$i]." réussie" ;
+                    echo '<br/>' ;
+				}
+    }
 
 	include('pied.php');
