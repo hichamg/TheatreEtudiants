@@ -8,7 +8,7 @@
    
 	$titre = "Création d'une représentation du spectacle $NOMS pour la date suivante : $DATEREP $HEUREREP";
     include('entete.php');
-    //print_r($_POST);
+    print_r($_POST);
     
 	// construction des requêtes
 	$requete1 = "select numS from LesSpectacles where nomS='$NOMS'";
