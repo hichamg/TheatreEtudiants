@@ -28,7 +28,7 @@
 
 	// travail à réaliser
 	echo ("
-		<p class=\"work\">
+		<p class=\"ok\">
 			Améliorez l'interface utilisateur en proposant, à la place du champ de saisie libre, un choix de catégorie dans une liste contenant toutes les catégories (sous forme de boite de sélection ou de boutons radio).<br />Cette liste sera codée \"en dur\".
 		</p>
 	");

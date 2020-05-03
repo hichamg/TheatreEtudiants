@@ -73,7 +73,7 @@
 	*/
 	// travail à réaliser
 	echo ("
-		<p class=\"work\">
+		<p class=\"ok\">
 			Ajoutez une étape à cet enchaînement de scripts de façon à obtenir le fonctionnement suivant :
 			<ul>
 				<li><b>Etape 1 :</b> un formulaire nous demande de choisir un numéro de dossier dans une liste extraite de la base de données</li>

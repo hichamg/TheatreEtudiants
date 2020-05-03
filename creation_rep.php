@@ -48,8 +48,7 @@
                     </select>
                     <br /><br />
                     <label for="sel_dateRep">Date de la nouvelle représentation :</label>
-					<input type="date" id="sel_DATEREP" name="DATEREP" />
-                    <input type="time" id="sel_HEUREREP" name="HEUREREP" />
+					<input type="datetime-local" id="sel_DATEREP" name="DATEREP" />
                     <br /><br />
                     <input type="submit" value="Valider" />
                     <input type="reset" value="Annuler" />

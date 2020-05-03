@@ -61,10 +61,9 @@ oci_free_statement($curseur);
 
 
 // travail à réaliser
-echo ("
-		<p class=\"work\">
-            A remplacer plus tard.
-            Verifier si l'affichage est correcte.
+echo ( "
+		<p class=\"ok\">
+            Créer les programmes CategorieTicket.php et Categorie-action.php pour améliorer l’interface utilisateur.
 		</p>
 	");
 

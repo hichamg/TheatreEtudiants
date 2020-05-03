@@ -123,10 +123,11 @@
 
 
 	// travail à réaliser
-	echo ("
-		<p class=\"work\">
-            A remplacer plus tard.
-            Verifier si l'affichage est correcte.
+	echo ( "
+		<p class=\"ok\">
+			1. Afficher la date de la repréesentation (dans la granularité de l’heure) et le nom du spectacle.
+			<br></br>
+			2. Afficher les détails des représentations d’un spectacle choisi dans la liste.
 		</p>
 	");
 

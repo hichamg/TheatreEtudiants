@@ -3,16 +3,17 @@
     // récupération des variables
     $NOMS = $_POST['NOMS'];
     $DATEREP = $_POST['DATEREP'];
-    $HEUREREP = $_POST['HEUREREP'];
-
-   
-	$titre = "Création d'une représentation du spectacle $NOMS pour la date suivante : $DATEREP $HEUREREP";
+    //$HEUREREP = $_POST['HEUREREP'];
+    $date = date("Y-m-d H:i",strtotime($DATEREP)) ;
+    
+	$titre = "Création d'une représentation du spectacle $NOMS pour la date suivante : $date";
     include('entete.php');
-    print_r($_POST);
+    //$date = date($DATEREP, strtotime($date));
+   
     
 	// construction des requêtes
 	$requete1 = "select numS from LesSpectacles where nomS='$NOMS'";
-	$requete2 = "INSERT INTO LesRepresentations values (TO_DATE('$DATEREP $HEUREREP', 'YYYY-MM-DD HH24:MI'), :n )";
+    $requete2 = "INSERT INTO LesRepresentations (dateRep, numS) values ( TO_DATE('$date', 'YYYY-MM-DD HH24:MI'), :n )";
 
 	// analyse de la requete 1 et association au curseur
 	$curseur1 = oci_parse ($lien, $requete1) ;
@@ -41,8 +42,10 @@
 		}
 		else {
             $curseur2 = oci_parse ($lien, $requete2) ;
-            // affectation de la variable
-            oci_bind_by_name($curseur2, ':n', $NOMS);
+        // affectation de la variable
+            $NUMS = oci_result($curseur1, 1);
+
+            oci_bind_by_name($curseur2, ':n', $NUMS);
 
             $ok = @oci_execute ($curseur2, OCI_NO_AUTO_COMMIT) ;
             // on teste $ok pour voir si oci_execute s'est bien passé

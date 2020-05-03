@@ -69,7 +69,7 @@
 
 	// travail à réaliser
 	echo ("
-		<p class=\"work\">
+		<p class=\"ok\">
 			Modifiez cet enchaînement de scripts afin d'afficher pour chaque ticket, en plus des informations déjà existantes, sa date d'émission et son numéro de dossier.
 		</p>
 	");
