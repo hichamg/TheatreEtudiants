@@ -29,7 +29,7 @@
             if (!$res) {
         
                 // il n'y a aucun résultat
-                echo "<p class=\"erreur\"><b>Aucun ticket dans la base de donnée</b></p>" ;
+                echo "<p class=\"erreur\"><b>Aucun représentation dans la base de donnée</b></p>" ;
         
             }else {
         
@@ -113,6 +113,7 @@
                         <br /><br />
                         <label for=\"sel_dateNv\">La nouvelle date de la représentation :</label>
                         <input type=\"datetime-local\" id=\"sel_dateNv\" name=\"dateNv\" />
+                        <input type=\"hidden\" id=\"sel_numS\" name=\"numS\" value=\"$numS\" />
                         <br /><br />
                         <input type=\"submit\" value=\"Valider\" />
                         <input type=\"reset\" value=\"Annuler\" />
