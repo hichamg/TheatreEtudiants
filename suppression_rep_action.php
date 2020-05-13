@@ -22,6 +22,8 @@ if (!$ok) {
     $e = oci_error($curseur);
     if ($e['code'] == 1) {
         echo LeMessage("affectationconnue");
+    } else if ($e['code'] == 2292) {
+        echo LeMessage("violationContarinte");
     } else {
         echo LeMessageOracle($e['code'], $e['message']);
     }

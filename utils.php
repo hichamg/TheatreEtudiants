@@ -7,12 +7,15 @@
 	function LeMessage ($codeErreur) {
 		$t = 1;
 		switch ($codeErreur) {
-			case "pasdeconnexion":
+			case "pasdeconnexion": 
 				$t = 0;
 				$message= "La connexion à la base de données a échoué"; break;
 			case "connexionOK":
 				$t = 1;
 				$message= "Connexion réussie"; break;
+			case "violationContarinte":
+				$t = 1;
+				$message= "Des reservations existent pour cette representation.La modification ne peut pas etre effectuée."; break;
 			case "majOK":
 				$t = 1;
 				$message = "La mise à jour a été effectuée"; break ;
