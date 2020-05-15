@@ -52,5 +52,13 @@ if (!$ok) {
     oci_free_statement($curseur);
 
     MajLesDossiers($NODOSSIER,$lien);
+    
+    echo '
+		<p class="info">
+            <a href="details_tickets_bd.php"> Détails d\'un ticket </a>
+            <br></br>
+            <a href="details_dossier_bd.php"> Détails d\'un dossier </a>
+		</p>
+	';
 
 include('pied.php');
