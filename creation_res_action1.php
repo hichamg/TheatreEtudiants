@@ -76,12 +76,12 @@ echo $elapsed; */
                     }else {
                         $nb_disp = oci_result($curseur2, 1);
                         if($nb_disp>70){
+                            echo ("<option value=\"$dateRep\">$dateRep</option>");                       
                             $datetime1 = new DateTime();
                             $datetime2 = new DateTime($dateRep);
                             $interval = $datetime1->diff($datetime2);
                             $elapsed = $interval->format("%H");
                             if ($elapsed>1) {
-                                echo ("<option value=\"$dateRep\">$dateRep</option>");                       
                             }
                         }
                     }

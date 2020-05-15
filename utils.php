@@ -31,6 +31,9 @@
 			case "majRejetee":
 				$t = 0;
 				$message = "La mise à jour a été rejetée"; break ;
+			case "NvDossier_impossible":
+				$t = 0;
+				$message = "Impossible de créer un nouveau dossier"; break ;
 			case "problemevariables":
 				$t = 0;
 				$message = "Votre navigateur ne semble pas accepter les cookies"; break ;
@@ -85,6 +88,49 @@
 	// Deconnexion (l) deconnecte le lien l de Oracle
 	function Deconnexion ($lien) {
 		oci_close ($lien) ;
+	}
+
+	// MaJ des Dossier
+	function MajLesDossiers($NODOSSIER,$lien) {
+            $requete = "
+                UPDATE LesDossiers
+                set montant=(
+                    select sum(prix) as montant
+                    from LesTickets
+                            natural join LesPlaces
+                            natural join LesZones
+                            natural join LesCategories
+                    where noDossier =:n)
+                where noDossier =:n
+            ";
+
+        $curseur = oci_parse($lien, $requete);
+        
+        oci_bind_by_name($curseur, ':n', $NODOSSIER);
+        $ok = oci_execute($curseur);
+        if (!$ok) {
+
+            echo LeMessage("majRejetee") . "<br /><br />";
+            $e = oci_error($curseur);
+            if ($e['code'] == 1) {
+                echo LeMessage("majRejetee");
+            } else {
+                $a = $e['code'];
+                echo LeMessageOracle($e['code'], $e['message']);
+            }
+
+            // terminaison de la transaction : annulation
+            oci_rollback($lien);
+        } else {
+            //echo LeMessage("majOK");
+            echo "<p class=\"ok\">
+                La dossier $NODOSSIER est mis a jour avec succès.
+                </p> ";
+            // terminaison de la transaction : validation
+            oci_commit($lien);
+        }
+
+        oci_free_statement($curseur);
 	}
 
 ?>
