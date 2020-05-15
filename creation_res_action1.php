@@ -23,7 +23,7 @@ echo $elapsed; */
 
     // requete pour recuperer les dates de spectacles
     $requete = ("
-            SELECT to_char(daterep,'DD-MM-YYYY HH24:MI') as DATEREP from LesRepresentations
+            SELECT to_char(daterep,'YYYY-MM-DD hh24:mi') as DATEREP from LesRepresentations
             where numS='$NUMS' 
         ");
         
@@ -32,7 +32,7 @@ echo $elapsed; */
     $requete2 = ( "
         select 1000 - count(*) as nb_res
         from LesTickets
-        where dateRep = to_date('$dateRep', 'YYYY-MM-DD hh24:mi');
+        where dateRep = to_date(:n,'YYYY-MM-DD hh24:mi')
     ");
 
 	// analyse de la requete et association au curseur
@@ -69,7 +69,8 @@ echo $elapsed; */
 			do {
                 $dateRep = oci_result($curseur, 1);
                 $curseur2 = oci_parse($lien, $requete2);
-                $ok2 = @oci_execute($curseur2);
+                oci_bind_by_name($curseur2, ':n', $dateRep);
+                $ok2 = oci_execute($curseur2);
                 if (!$ok2) {
                     $error_message = oci_error($curseur2);
                     echo "<p class=\"erreur\">{$error_message['message']}</p>";
@@ -79,11 +80,11 @@ echo $elapsed; */
                         echo "<p class=\"erreur\"><b>Aucune place</b></p>";
                     }else {
                         $nb_disp = oci_result($curseur2, 1);
-                        echo"$nb_disp";
-                        echo ("<option value=\"$dateRep\">yolo/option>");                       
+                        if($nb_disp>70){
+                            echo ("<option value=\"$dateRep\">$dateRep</option>");                       
+                        }
                     }
                 }
-
             
 			} while ($res = oci_fetch($curseur));
 
@@ -99,6 +100,7 @@ echo $elapsed; */
     
 	// on libère le curseur
     oci_free_statement($curseur);
+    oci_free_statement($curseur2);
    
     //info programme
     echo ( "
