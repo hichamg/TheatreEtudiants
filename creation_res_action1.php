@@ -9,11 +9,6 @@ $NODOSSIER = $_POST['NODOSSIER'];
 $titre = "Création du ticket no° $NOSERIE du spectacle no° $NUMS ";
 include('entete.php');
 
-/* $date = date( "Y-m-d H:i:s", time());
-echo "$date";
-
-$date1 =  */
-print_r($_POST);
 
 /* $datetime1 = new DateTime();
 $datetime2 = new DateTime($dateRep);
@@ -24,7 +19,7 @@ echo $elapsed; */
     // requete pour recuperer les dates de spectacles
     $requete = ("
             SELECT to_char(daterep,'YYYY-MM-DD hh24:mi') as DATEREP from LesRepresentations
-            where numS='$NUMS' 
+            where numS='$NUMS' and dateRep>CURRENT_TIMESTAMP
         ");
         
     // requete pour verifier le nombre de place disponible
@@ -81,20 +76,29 @@ echo $elapsed; */
                     }else {
                         $nb_disp = oci_result($curseur2, 1);
                         if($nb_disp>70){
-                            echo ("<option value=\"$dateRep\">$dateRep</option>");                       
+                            $datetime1 = new DateTime();
+                            $datetime2 = new DateTime($dateRep);
+                            $interval = $datetime1->diff($datetime2);
+                            $elapsed = $interval->format("%H");
+                            if ($elapsed>1) {
+                                echo ("<option value=\"$dateRep\">$dateRep</option>");                       
+                            }
                         }
                     }
                 }
             
 			} while ($res = oci_fetch($curseur));
 
-            echo '
+            echo "
                     </select>
                     <br /><br />
-                    <input type="submit" value="Valider" />
-                    <input type="reset" value="Annuler" />
+                    <input type=\"hidden\" id=\"sel_NUMS\" name=\"NUMS\" value=\"$NUMS\" />
+                    <input type=\"hidden\" id=\"sel_NODOSSIER\" name=\"NODOSSIER\" value=\"$NODOSSIER\" />
+                    <input type=\"hidden\" id=\"sel_NOSERIE\" name=\"NOSERIE\" value=\"$NOSERIE\" />
+                    <input type=\"submit\" value=\"Valider\" />
+                    <input type=\"reset\" value=\"Annuler\" />
                 </form>
-				';
+				";
 		}
 	}
     
