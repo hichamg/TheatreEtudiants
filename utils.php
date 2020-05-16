@@ -16,6 +16,10 @@
 			case "violationContarinte":
 				$t = 1;
 				$message= "Des reservations existent pour cette representation.La modification ne peut pas etre effectuée."; break;
+			case "violationContarinte2":
+				$t = 1;
+				$message= "Impossible de modifier ce ticket,seuls les tickets des spectacles à venir peuvent etre modifiés.
+					(Violation de la contrainte \"dateEmission &lt; dateRep\" "; break;
 			case "majOK":
 				$t = 1;
 				$message = "La mise à jour a été effectuée"; break ;
