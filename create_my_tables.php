@@ -43,7 +43,7 @@ include('entete.php');
 
     $requete[6]= "create table LesDossiers (
                     noDossier number(4) not null,
-                    montant number(8,2) not null,
+                    montant number(8,2),
                     constraint LesDossiers_pk primary key (noDossier),
                     constraint LesDossiers_check check ( noDossier > 0 )
                 )";

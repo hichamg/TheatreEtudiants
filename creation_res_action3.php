@@ -9,13 +9,10 @@ $NOSERIE = $_POST['NOSERIE'];
 $NUMS = $_POST['NUMS'];
 $DATEREP = $_POST['DATEREP'];
 $NODOSSIER = $_POST['NODOSSIER'];
-/* Array ( [pRang] => 1:4 [NOSERIE] => 1952 [NUMS] => 1 [DATEREP] => 2020-05-20 20:30 [NODOSSIER] => 106 )
-PLACE : [ 1 ] RANG: [ 4 ] */
 
 $titre = "Création du ticket no° $NOSERIE du spectacle no° $NUMS [$DATEREP] ";
 include('entete.php');
-//include('update_dossier.php');
-//echo " debug noplace = $NORANG";
+
 $requete = "INSERT INTO LesTickets
                 values (:a, :b, TO_DATE(:c, 'YYYY-MM-DD HH24:MI'), :d, :e, CURRENT_TIMESTAMP, :f) ";
 

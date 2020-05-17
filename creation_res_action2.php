@@ -10,7 +10,7 @@
     include('entete.php');
     if ($NODOSSIER == 0) {
         $requete1 = " SELECT max(noDossier)+1 from LesDossiers";
-        $requete2 = "INSERT INTO LesDossiers (noDossier, montant) values (:p, 1)";
+        $requete2 = "INSERT INTO LesDossiers (noDossier, montant) values (:p, NULL)";
         $curseur1 = oci_parse($lien, $requete1);
         $ok = oci_execute($curseur1);
         if (!$ok) {

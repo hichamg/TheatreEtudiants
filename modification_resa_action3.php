@@ -54,6 +54,31 @@ if (!$ok) {
 
 oci_free_statement($curseur);
 
+$requete1="select noDossier from LesTickets 
+            where NoSerie=:f";
+
+$curseur1 = oci_parse($lien, $requete1);
+oci_bind_by_name($curseur1, ':f', $NOSERIE);
+$ok = oci_execute($curseur1);
+if (!$ok) {
+    // oci_execute a échoué, on affiche l'erreur
+    $error_message = oci_error($curseur1);
+    echo "<p class=\"erreur\">{$error_message['message']}</p>";
+} else {
+
+    // oci_execute a réussi, on fetch sur le premier résultat
+    $res = oci_fetch($curseur1);
+
+    if (!$res) {
+        // il n'y a aucun résultat
+        echo "<p class=\"erreur\"><b>Aucun dossier trouvé dans la bdd</b></p>";
+        $e = oci_error($curseur1);
+        echo LeMessageOracle($e['code'], $e['message']);
+    } else {
+        $NODOSSIER = oci_result($curseur1, 1);
+    }
+}
+
 MajLesDossiers($NODOSSIER, $lien);
 
 echo '

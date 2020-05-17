@@ -58,10 +58,7 @@ include('entete.php');
                                 <td>$dateRep</td>
                                 <td>$nb_res</td>
                         </tr>";
-                    
-                
-
-                oci_free_statement($curseur2);
+        
             } while (oci_fetch($curseur));
 
             echo "</table>";

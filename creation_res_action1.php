@@ -10,16 +10,13 @@ $titre = "Création du ticket no° $NOSERIE du spectacle no° $NUMS ";
 include('entete.php');
 
 
-/* $datetime1 = new DateTime();
-$datetime2 = new DateTime($dateRep);
-$interval = $datetime1->diff($datetime2);
-$elapsed = $interval->format(' %h hours');
-echo $elapsed; */
-
     // requete pour recuperer les dates de spectacles
-    $requete = ("
-            SELECT to_char(daterep,'YYYY-MM-DD hh24:mi') as DATEREP from LesRepresentations
-            where numS='$NUMS' and dateRep>CURRENT_TIMESTAMP
+    $requete = ( "
+            SELECT to_char(daterep, 'YYYY-MM-DD hh24:mi') as DATEREP
+            from LesRepresentations,
+                (select CURRENT_TIMESTAMP + 1 / 24 as datecond from dual)
+            where numS = :ns
+            and dateRep > dateCond
         ");
         
     // requete pour verifier le nombre de place disponible
@@ -32,7 +29,7 @@ echo $elapsed; */
 
 	// analyse de la requete et association au curseur
     $curseur = oci_parse($lien, $requete);
-    
+    oci_bind_by_name($curseur, ':ns', $NUMS);
 	// execution de la requete
 	$ok = @oci_execute($curseur);
 
@@ -77,12 +74,6 @@ echo $elapsed; */
                         $nb_disp = oci_result($curseur2, 1);
                         if($nb_disp>70){
                             echo ("<option value=\"$dateRep\">$dateRep</option>");                       
-                            $datetime1 = new DateTime();
-                            $datetime2 = new DateTime($dateRep);
-                            $interval = $datetime1->diff($datetime2);
-                            $elapsed = $interval->format("%H");
-                            if ($elapsed>1) {
-                            }
                         }
                     }
                 }

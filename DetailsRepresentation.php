@@ -96,9 +96,6 @@
 		}
 		else {
 
-			//On cree une liste avec le nom de tous spectacles
-			//$choix = array();
-
 			// on affiche la table qui va servir a la mise en page du resultat
 			echo "<table><tr><th>dateRep</th><th>Nom du Spectacle</th></tr>";
 
